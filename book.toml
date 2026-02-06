@@ -1,0 +1,4 @@
+[book]
+title = "Vector Search with Rust and SQLite"
+authors = ["kendrick"]
+language = "en"
