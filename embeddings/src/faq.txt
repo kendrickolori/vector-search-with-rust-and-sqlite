@@ -1,0 +1,29 @@
+=== SERVICES & SPECIALIZATION ===
+
+Q: What types of bots do you develop?
+A: I specialize in building custom automation for Telegram, WhatsApp, and specialized AI Agents. This includes everything from order management systems and customer support bots to complex multi-agent simulations for business workflows.
+
+Q: Can you integrate AI into my existing Telegram or WhatsApp bot?
+A: Yes. I can integrate Large Language Models (LLMs) to make your bots "intelligent." This allows them to handle natural language queries, process images (OCR), and provide context-aware responses instead of just following rigid menus.
+
+Q: Do you offer custom dashboard development for bot management?
+A: Absolutely. While the bots live on chat platforms, I can build Terminal User Interfaces (TUIs) or web-based dashboards for you to track performance, manage inventory, and view logs in real-time.
+
+=== TECHNICAL & SECURITY ===
+
+Q: Which programming languages do you use for development?
+A: Most of my high-performance automation and bots are built using Rust and Go for speed and concurrency. For rapid prototyping or specific AI integrations, I also utilize Python.
+
+Q: Is my customer data secure when using your automation?
+A: Security is a priority. I implement end-to-end logic that ensures data is processed securely. For local clients, I can also host solutions on local infrastructure to ensure data residency compliance.
+
+=== PAYMENTS & LOGISTICS ===
+
+Q: What is the typical timeline for a custom bot project?
+A: A standard automation bot usually takes 1–2 weeks. More complex AI Agents or systems requiring multi-backend integration (like syncing WhatsApp with a database) typically take 3–5 weeks.
+
+Q: What payment methods do you accept in Nigeria?
+A: I accept bank transfers to my business account and major stablecoins (USDT/USDC). For international clients, I can facilitate payments through specialized global platforms.
+
+Q: Do you provide maintenance after the bot is deployed?
+A: Yes, all projects include a standard 30-day maintenance period to fix bugs and ensure the bot adapts to any API updates from Telegram or WhatsApp. Long-term support contracts are also available.
