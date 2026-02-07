@@ -92,8 +92,8 @@ We measure the **angle** between them.
 ![Alt text](img_3.png)
 
 The smaller the angle, the more similar.
+If we represent "I have a dog" as a vector at 40°, "My dog gave birth to a litter of five puppies" as 60°, and "Car" as 230°, we develop a system for ranking similarity. Crucially, this is magnitude-invariant. Just because "A" is a whole book about dogs doesn't change its similarity to the sentence "I have a dog," because they both point in the same "thematic" direction.
 
-So if we represent "dog" as 40° Northwest, "puppy" as 60° Northwest, and "car" as 230° Southeast, it's obviously easy to see which are similar.
 
 ## Back to Queries
 Back to our cute puppy litters.
@@ -107,7 +107,7 @@ Then finding similar questions becomes a simple matter of:
 - Converting and labeling our data as vectors
 - Converting the query into a vector
 - Measuring the angle between the query and all stored vectors
-- Returning the ones with the smallest angles
+- Returning the ones with the smallest angles(and consequently higher similarity)
 
 While we've covered the basics of how this works, we still have a lot to explore.
 

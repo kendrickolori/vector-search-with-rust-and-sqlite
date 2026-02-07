@@ -32,8 +32,10 @@ impl Embedding {
     /// Returns:
     /// - 0.0 for identical vectors
     /// - 2.0 for opposite, zero, or mismatched vectors
-    fn cosine_distance(a: &[f32], b: &[f32]) -> f64 {
+    fn cosine_distance(a: &[f32], b: &[f32]) -> f32 {
         if a.len() != b.len() {
+            // Arbitrary distance to represent vectors in different dimensions
+            // Should be a custom error in production
             return 2.0;
         }
 
@@ -42,15 +44,15 @@ impl Embedding {
         let mag_b = b.iter().map(|x| x * x).sum::<f32>().sqrt();
 
         if mag_a == 0.0 || mag_b == 0.0 {
+            // Zero vectors are incompatible, should return an error too
             return 2.0;
         }
 
-        (1.0 - dot / (mag_a * mag_b)) as f64
+        1.0 - dot / (mag_a * mag_b)
     }
 
     /// Initialize the database schema.
-    /// Vector math is performed in Rust; no SQLite vector extension is used.
-    pub fn init_db(conn: &Connection) -> SqlResult<()> {
+ pub fn init_db(conn: &Connection) -> SqlResult<()> {
         conn.execute(
             "CREATE TABLE IF NOT EXISTS embeddings (
                 id INTEGER PRIMARY KEY,
@@ -63,7 +65,10 @@ impl Embedding {
     }
 
     /// Persist this embedding to SQLite.
+    /// Uses bytemuck to safely convert the f32 vector slice into bytes for storage,
+    /// since SQLite doesn't natively support floating-point arrays.
     pub fn commit(&self, conn: &Connection) -> SqlResult<()> {
+        // bytemuck::cast_slice converts &[f32] to &[u8] for binary storage
         let bytes: &[u8] = bytemuck::cast_slice(&self.vector);
 
         conn.execute(
@@ -75,13 +80,15 @@ impl Embedding {
 
     /// Perform a naive similarity search.
     /// NOTE: This performs a full table scan and is suitable only for small datasets.
-    pub fn search(&self, conn: &Connection, limit: usize) -> SqlResult<Vec<(String, f64)>> {
+    pub fn search(&self, conn: &Connection, limit: usize) -> SqlResult<Vec<(String, f32)>> {
         let mut stmt = conn.prepare("SELECT label, vector FROM embeddings")?;
 
-        let mut results: Vec<(String, f64)> = stmt
+        let mut results: Vec<(String, f32)> = stmt
             .query_map([], |row| {
                 let label: String = row.get(0)?;
                 let bytes: Vec<u8> = row.get(1)?;
+                
+                // bytemuck::cast_slice converts &[u8] back to &[f32] for computation
                 let stored: &[f32] = bytemuck::cast_slice(&bytes);
 
                 let distance = Self::cosine_distance(&self.vector, stored);
