@@ -60,10 +60,10 @@ cargo run
 
 ## Chapters
 
-**[Chapter 1: Where Traditional Queries Fail](chapter_1.html)**  
+**[Chapter 1: Where Traditional Queries Fail](https://kendrickolori.github.io/vector-search-with-rust-and-sqlite/chapter_1.html)**  
 We explore the limits of traditional SQL and what we can use in its place.
 
-**[Chapter 2: Building Vector Search](chapter_2.html)**  
+**[Chapter 2: Building Vector Search](https://kendrickolori.github.io/vector-search-with-rust-and-sqlite/chapter_2.html)**  
 Generate embeddings, store them in SQLite, calculate cosine similarity, and search.
 
 **Chapter 3: The FAQ Chatbot** *(coming soon)*  
