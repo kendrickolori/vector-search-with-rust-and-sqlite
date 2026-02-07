@@ -12,13 +12,7 @@ Let's get started.
 Create a new cargo project and add these to your dependencies:
 
 ```toml
-[dependencies]
-bytemuck = "1.25.0"
-reqwest = { version = "0.13.1", features = ["json", "native-tls"] }
-rusqlite = "0.38.0"
-serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.149"
-tokio = { version = "1.49.0", features = ["full"] }
+{{#include ../embeddings/Cargo.toml:9:15}}
 ```
 
 Create a `types.rs` file in your `src` folder and add the following imports:
