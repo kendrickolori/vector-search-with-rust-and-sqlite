@@ -106,12 +106,14 @@ We use bytemuck to cast our vectors to binary since SQLite does not support floa
 We've set up the bulk of this. We're only left with a way of comparing vectors.
 
 ---
+## The Cosine Similarity And Cosine Distance
 
-## The Cosine Similarity
+In Chapter 1, we defined the similarity between two vectors as a measure of 
+the angular difference between them as observed from the origin.
 
-In Chapter 1, we defined the similarity between two vectors as a measure of the angular difference between them as observed from the origin.
-
-In practice, we use what is known as Cosine Similarity. Unlike angles which tell us where a vector is pointing relative to the x, y, or z axes—Cosine Similarity tells us how Vector A is oriented relative to Vector B.
+In practice, we use what is known as Cosine Similarity. Unlike angles which 
+tell us where a vector is pointing relative to the x, y, or z axes — Cosine 
+Similarity tells us how Vector A is oriented relative to Vector B.
 
 Cosine Similarity measures the angle between any two non-zero vectors.
 It ranges from:
@@ -125,8 +127,17 @@ The formula is described below:
 
 The above cosine similarity of 0.8 represents a high match.
 
-We need to implement the cosine similarity for any two arbitrary non-zero vectors with n dimensions:
+In practice however, it's more efficient to measure the *gap* between vectors 
+rather than their similarity — this is the **Cosine Distance**, simply `1 - similarity`:
 
+| Cosine Similarity | Cosine Distance | Meaning |
+|---|---|---|
+| 1  | 1 - 1 = 0 | Identical (zero distance) |
+| 0  | 1 - 0 = 1 | No similarity |
+| -1 | 1 - (-1) = 2 | Opposite |
+
+This makes sorting intuitive — ascending order by distance puts the best 
+matches first. Now we can implement it:
 ```rust
 {{#include ../embeddings/src/types.rs:35:53}}
 ```
@@ -135,10 +146,10 @@ We need to implement the cosine similarity for any two arbitrary non-zero vector
 
 ## Searching with Vector Similarity
 
-Now we can use this. We grab all embeddings in our database, compare each vector, and return the top highest matches.
+Now we can use this. We grab all embeddings in our database, compare each 
+vector, and return the top highest matches.
 
 Simple enough, right?
-
 ```rust
 {{#include ../embeddings/src/types.rs:81:99}}
 ```
@@ -147,7 +158,29 @@ Simple enough, right?
 
 We've gotten all the working parts ready!
 
-Now to use it—see you in the next chapter!
+Now let's slot it all in a CLI interface and see what we have:
+```rust
+{{#include ../embeddings/src/main.rs}}
+```
 
->[!NOTE]
->I've taken the liberty to add some helper functions to enable more speedy processing. Don't be surprised when you see them.
+### Putting It Together
+
+Your `faq.txt` should follow this format:
+```
+Q: What services do you offer?
+A: I specialize in automation and bot development.
+
+Q: Which languages do you use?
+A: Primarily Rust and Go for performance-critical work.
+```
+
+Load it with `load`, then try a search:
+![CLI Example !](img_5.png)
+![CLI Example !](img_6.png)
+
+Those are my output!
+How about Yours?
+
+--
+While we've come a long way theres still muh to be done,our program is still rough around the edges,with no error handling,if anything goes wrong(and i assure you it will) we have no idea where or we crash completely,many of our variables are hardcoded like db file,our faq file,top x search 
+we will fix that in the next chapter
